@@ -82,8 +82,8 @@ function printQrCode() {
 }
 
 // Testing the functions
-await initialize_the_wallet();
-await create_a_client();
-await start_a_new_conversation(WALLET_TO);
-await send_a_message("Hi, FaceLink here - williamw.eth wants to reach out to you! \n\n Their Discord username is williamw. \n\n Their message for you is: \n\n Hi, it's William! We met at ETHGlobal NYC and sang karaoke together. Unfortunately, I didn't get your name or contact, but I had a great time and would to karaoke again sometime. I'll be back in NYC in 2 weeks so let it me know if you will be free then! My phone number 123-456-7890. Talk to you soon!");
-await stream_all_messages()
+// await initialize_the_wallet();
+// await create_a_client();
+// await start_a_new_conversation(WALLET_TO);
+// await send_a_message("Hi, FaceLink here - williamw.eth wants to reach out to you! \n\n Their Discord username is williamw. \n\n Their message for you is: \n\n Hi, it's William! We met at ETHGlobal NYC and sang karaoke together. Unfortunately, I didn't get your name or contact, but I had a great time and would to karaoke again sometime. I'll be back in NYC in 2 weeks so let it me know if you will be free then! My phone number 123-456-7890. Talk to you soon!");
+// await stream_all_messages()
