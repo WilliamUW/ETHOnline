@@ -9,6 +9,8 @@ import requests
 from PIL import Image
 import numpy as np
 
+from web3storage import uploadImageToIPFS
+
 step = 0
 name = "Name"
 description = "Description"
@@ -25,6 +27,10 @@ import requests
 from dotenv import dotenv_values
 import os
 from twilio.rest import Client
+
+import w3storage
+
+w3 = w3storage.API(token="w3-api-token")
 
 
 config = dotenv_values(".env")  # Load .env file
@@ -593,7 +599,7 @@ Please type your preferred Flow address in the same message you attach your imag
 
             return f"""Registration Successful!
 
-You have linked your face: {image_url} 
+You have linked your face: {uploadImageToIPFS(image_url)} (Stored on IPFS)
 
 To your wallet address: {discord_username}
 
@@ -639,23 +645,14 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
                 print("Name: ", recipient)
                 print("The index of the first True element is:", index)
 
-                if flowTransactionFlow:
-                    flowTransactionFlow = False
-                    return f"""Face Recognition Successful! 
-
-Sending 1 FLOW To {recipient}
-                
-Image: {image_url} 
-
-FLOW Transaction Recipient: {recipient} (This can be hidden based on user privacy preferences)
-
-With the following encoding: {str(unknown_face_encoding)[:200]}... [2727 more characters]
-"""
-
                 discordAuthor = str(message.author)
 
-                
-                if recipient in wallet_to_phone and message_string != "" and recipient.isnumeric() and len(recipient) == 10:
+                if (
+                    recipient in wallet_to_phone
+                    and message_string != ""
+                    and recipient.isnumeric()
+                    and len(recipient) == 10
+                ):
                     twiliomessage = client.messages.create(
                         body=f"Hi, FaceConnect here - {discordAuthor} wants to reach out to you! \n\n Their Discord username is {discordAuthor}. \n\n Their message for you is: {str(message_string)}",
                         from_="+12295750071",
