@@ -471,7 +471,7 @@ def generate_text(prompt):
     return generated_text
 
 
-welcome_message = """Hi - welcome to FaceConnect! How can I help?
+welcome_message = """Hi - welcome to FaceLink! How can I help?
         
 Type "Register" to get started!
 Type "Connect" to connect with anyone with an image of their face!
@@ -657,7 +657,7 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
                     and len(recipient) == 10
                 ):
                     twiliomessage = client.messages.create(
-                        body=f"Hi, FaceConnect here - {discordAuthor} wants to reach out to you! \n\n Their Discord username is {discordAuthor}. \n\n Their message for you is: {str(message_string)}",
+                        body=f"Hi, FaceLink here - {discordAuthor} wants to reach out to you! \n\n Their Discord username is {discordAuthor}. \n\n Their message for you is: {str(message_string)}",
                         from_="+12295750071",
                         to=f"+1{wallet_to_phone[recipient]}",
                     )
