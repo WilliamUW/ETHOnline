@@ -14,7 +14,7 @@ https://github.com/WilliamUW/ETHOnline/assets/25058545/7e38d123-ffc5-43b7-b7f1-a
 
 ### Link to the code where the tech is used.
 
-https://github.com/WilliamUW/ETHOnline/blob/574ad0efd556407efd359740883a9778b1d2ae69/masknetwork.py#L4-L21
+https://github.com/WilliamUW/ETHOnline/blob/574ad0efd556407efd359740883a9778b1d2ae69/masknetwork.py#L8-L21
 
 ### How easy is it to use the API / Protocol? (1 - very difficult, 10 - very easy)
 
