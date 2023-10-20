@@ -23,7 +23,7 @@ Safe{Core} Account Abstraction SDK (integrating at least one of the existing kit
 Allowing users to create an Ethereum address and authenticating a blockchain account using an email address, social media account, or traditional crypto wallets like Metamask through our Discord bot
 
 ### Link to the code where the tech is used.
-https://github.com/WilliamUW/ETHNYC/blob/fb18d4be6c4258c4efde16a42ba7470a7e923c2c/reputation-analysis/transaction-tracker/transaction_info.js#L2-L82
+
 ### How easy is it to use the API / Protocol? (1 - very difficult, 10 - very easy)
 
 10 🌟
