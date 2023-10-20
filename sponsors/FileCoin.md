@@ -16,6 +16,8 @@ We leveraged IPFS, specifically the Web3.Storage API to store the selfies that u
 
 ### Link to the code where the tech is used.
 
+https://github.com/WilliamUW/ETHOnline/blob/f9ddf05dd58164e12473fc4aab6d7be2af576ecc/web3storage.py#L1-L24
+
 ### How easy is it to use the API / Protocol? (1 - very difficult, 10 - very easy)
 
 10!
