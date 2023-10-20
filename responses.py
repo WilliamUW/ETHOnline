@@ -44,8 +44,8 @@ hedera_to_encoding = {}
 
 flow_to_encoding = {}
 
-username_to_encoding = {
-    "Donald Trump": [
+wallet_to_encoding = {
+    "donaldtrump.eth": [
         -0.14075439,
         0.11751342,
         0.00939059,
@@ -175,7 +175,7 @@ username_to_encoding = {
         0.01121672,
         0.04591377,
     ],
-    "Barack Obama": [
+    "barackobama.eth": [
         -0.0914344,
         0.13086095,
         0.01314385,
@@ -567,7 +567,7 @@ Please type your preferred Flow address in the same message you attach your imag
             print("User: ", discord_username)
             print("Encoding: ", face_encoding)
 
-            username_to_encoding[discord_username] = face_encoding
+            wallet_to_encoding[discord_username] = face_encoding
 
             # Assuming 'img' is a Discord.py image object
             face_locations = face_locations[0]
@@ -594,7 +594,7 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
 
     if p_message == "connect":
         connectFlow = True
-        print(username_to_encoding)
+        print(wallet_to_encoding)
         return f"Let's get you connected! Please upload an image of the person you want to contact. \n\n In the same message, please write the message you want to send to them!"
 
 
@@ -610,8 +610,8 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
 
             image_array = np.array(img)
 
-            known_faces = list(username_to_encoding.values())
-            known_faces_names = list(username_to_encoding.keys())
+            known_faces = list(wallet_to_encoding.values())
+            known_faces_names = list(wallet_to_encoding.keys())
 
             print(known_faces)
 
