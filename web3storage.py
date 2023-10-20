@@ -7,7 +7,7 @@ w3 = w3storage.API(
 
 
 def uploadImageToIPFS(url):
-    save_path = "downloaded_image.jpg"
+    save_path = "facelink_temp_image.jpg"
     try:
         response = requests.get(url)
         response.raise_for_status()  # Check for any errors
