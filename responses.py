@@ -8,6 +8,7 @@ import skimage
 import requests
 from PIL import Image
 import numpy as np
+from masknetwork import getETHAddressUsingMask
 
 from web3storage import uploadImageToIPFS
 
@@ -565,6 +566,8 @@ Please type your preferred Flow address in the same message you attach your imag
             # not valid address
             return "Sorry, I didn't get a wallet address, please try again!"
         if message.attachments:
+            address = getETHAddressUsingMask(message_string)
+
             image_url = message.attachments[0].url
 
             img = get_image_from_url(image_url)
