@@ -44,6 +44,8 @@ hedera_to_encoding = {}
 
 flow_to_encoding = {}
 
+wallet_to_phone = {"donaldtrump.eth": "4168807375", "barackobama.eth": "4168807375"}
+
 wallet_to_encoding = {
     "donaldtrump.eth": [
         -0.14075439,
@@ -637,22 +639,6 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
                 print("Name: ", recipient)
                 print("The index of the first True element is:", index)
 
-                if hederaFlow:
-                    hederaFlow = False
-                    return str(getHederaAccountInfo(recipient))[0:1000]
-
-                if hederaTransactionFlow:
-                    hederaTransactionFlow = False
-                    return f"""Face Recognition Successful! 
-
-Sending 1 HBAR To {recipient}
-                
-Image: {image_url} 
-
-Hedera Transaction Recipient: {recipient} (This can be hidden based on user privacy preferences)
-
-With the following encoding: {str(unknown_face_encoding)[:200]}... [2727 more characters]
-"""
                 if flowTransactionFlow:
                     flowTransactionFlow = False
                     return f"""Face Recognition Successful! 
@@ -668,14 +654,12 @@ With the following encoding: {str(unknown_face_encoding)[:200]}... [2727 more ch
 
                 discordAuthor = str(message.author)
 
-                if recipient == "William Wang":
-                    recipient = "4168807375"
-
-                if recipient.isnumeric() and len(recipient) == 10:
+                
+                if recipient in wallet_to_phone and message_string != "" and recipient.isnumeric() and len(recipient) == 10:
                     twiliomessage = client.messages.create(
                         body=f"Hi, FaceConnect here - {discordAuthor} wants to reach out to you! \n\n Their Discord username is {discordAuthor}. \n\n Their message for you is: {str(message_string)}",
                         from_="+12295750071",
-                        to=f"+1{recipient}",
+                        to=f"+1{wallet_to_phone[recipient]}",
                     )
 
                     print(twiliomessage.sid)
