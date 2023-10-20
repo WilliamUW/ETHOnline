@@ -29,11 +29,10 @@ async function create_a_client() {
 }
 
 //Check if an address is on the network
-async function check_if_an_address_is_on_the_network() {
+async function check_if_an_address_is_on_the_network(WALLET_TO) {
   //Message this XMTP message bot to get an immediate automated reply:
   //gm.xmtp.eth (0x937C0d4a6294cdfa575de17382c7076b579DC176) env:production
   //
-  WALLET_TO = "0x0E5d299236647563649526cfa25c39d6848101f5";
   if (xmtp) {
     const isOnDevNetwork = await xmtp.canMessage(WALLET_TO);
     console.log(`Can message: ${isOnDevNetwork}`);
@@ -43,8 +42,8 @@ async function check_if_an_address_is_on_the_network() {
 }
 
 //Start a new conversation
-async function start_a_new_conversation() {
-  const canMessage = await check_if_an_address_is_on_the_network();
+async function start_a_new_conversation(WALLET_TO) {
+  const canMessage = await check_if_an_address_is_on_the_network(WALLET_TO);
   if (!canMessage) {
     console.log("Cannot message this address. Exiting...");
     return;
@@ -57,9 +56,9 @@ async function start_a_new_conversation() {
 }
 
 //Send a message
-async function send_a_message() {
+async function send_a_message(message_content) {
   if (conversation) {
-    const message = await conversation.send("gm from the quickstart.");
+    const message = await conversation.send(message_content);
     console.log(`Message sent: "${message.content}"`);
     return message;
   }
@@ -82,9 +81,9 @@ function printQrCode() {
   qrcode.generate(`https://go.cb-w.com/messaging?address=${wallet?.address}`)
 }
 
-// Run the functions
+// Testing the functions
 await initialize_the_wallet();
 await create_a_client();
-await start_a_new_conversation();
-await send_a_message();
+await start_a_new_conversation(WALLET_TO);
+await send_a_message("Hi, FaceLink here - williamw.eth wants to reach out to you! \n\n Their Discord username is williamw. \n\n Their message for you is: \n\n Hi, it's William! We met at ETHGlobal NYC and sang karaoke together. Unfortunately, I didn't get your name or contact, but I had a great time and would to karaoke again sometime. I'll be back in NYC in 2 weeks so let it me know if you will be free then! My phone number 123-456-7890. Talk to you soon!");
 await stream_all_messages()
