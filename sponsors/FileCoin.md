@@ -14,6 +14,12 @@ Qualifying technologies: Filecoin, FVM (Filecoin Virtual Machine), Lilypad, IPC,
 
 We leveraged IPFS, specifically the Web3.Storage API to store the selfies that users upload. This ensures that in case the biometric encoding information is lost, we are still able to cross reference the images as a failsafe and create new encodings! 
 
+
+
+https://github.com/WilliamUW/ETHOnline/assets/25058545/e5ebb26b-df25-458e-a5ca-a758ae39026e
+
+
+
 ### Link to the code where the tech is used.
 
 https://github.com/WilliamUW/ETHOnline/blob/f9ddf05dd58164e12473fc4aab6d7be2af576ecc/web3storage.py#L1-L24
