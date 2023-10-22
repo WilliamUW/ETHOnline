@@ -1,21 +1,21 @@
 # ETHOnline
 ## Project Description
 
-This project allows users to send crypto and messages to anyone as long as they have a picture of their face. We use biometric data in combination with AI to create a unique hash for every face, and link that face to a wallet address. From there, through a discord bot, anyone can send messages or crypto to this individual without needing to know their wallet address.
-
+With this project, users can send crypto 💸 and messages 💌 to anyone, as long as they have a photo 📸 of their face. By merging biometric data with AI, we create a unique hash for each face and connect that face to a wallet address. And the magic happens through a Discord bot – so you can send messages or crypto without needing the receiver's wallet address.
 
 ## How it's Made
 
-This project's interface is a discord bot to handle registration, messaging, and sending tokens.
+    #### Interface: Our main interface is a Discord bot to handle registration, messaging, and sending crypto.
 
-At the core, we used Computer Vision with OpenCV and the Dlib C++ Library to implement AI-based facial biometric encoding and recognition.
+    #### Tech Core: We employ Computer Vision, OpenCV, and the Dlib C++ Library for AI-driven facial recognition.
 
-We also leveraged XTMP API to enable wallet-to-wallet messages for contacting connections
+    #### Messaging: The XTMP API enables wallet-to-wallet messages for easy communication.
 
-On the backend is a smart contract to handle to mapping of face hashes to wallet addresses.
+    #### Backend: A smart contract efficiently maps face hashes to wallet addresses.
 
-We used foundry to help develop, test, and deploy the contracts to several EVM chains.
+    #### Development: Using Foundry, we develop, test, and deploy the contracts to various EVM chains.
 
-We additionally used UMA for possible face hash disputes.
+    #### Dispute Handling: UMA is there for any potential face hash disputes.
 
-Utilized discord.py to integrate the user flow into Discord to reduce user friction and allow access on mobile, web, and desktop natively!
+    #### Integration: Thanks to discord.py, users enjoy a smooth journey on Discord, accessible via mobile, web, and desktop.
+
