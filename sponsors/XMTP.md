@@ -1,12 +1,12 @@
 # Sponsor Prize
 
-## [Sponsor Name]
+## XMTP
 
 ### Prize Requirements
 
 ### Please add a sentence or two on why you're applicable for this prize.
 
-We use XTMP to allow our bot to message people's wallet addresses and help establish reach outs without exposing any personal identifying information!
+We use XMTP to allow our bot to message people's wallet addresses and help establish reach outs without exposing any personal identifying information!
 
 https://github.com/WilliamUW/ETHOnline/assets/25058545/43236d01-480c-400c-bf54-70861e0cdeff
 
