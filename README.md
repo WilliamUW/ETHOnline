@@ -11,11 +11,13 @@ With this project, users can send crypto 💸 and messages 💌 to anyone, as lo
 
 **Messaging:** The XTMP API enables wallet-to-wallet messages for easy communication.
 
-**Backend:** A smart contract efficiently maps face hashes to wallet addresses. Mask's Universal Profile API to fetch a user's Ethereum address with any one of the following: an ENS domain, a Lens handle, a Farcaster username (ends with .farcaster), a .bit domain, or a Next.ID address.
+**Backend:** A smart contract efficiently maps face hashes to wallet addresses. Mask's Universal Profile API to fetch a user's Ethereum address with any one of the following: an ENS domain, a Lens handle, a Farcaster username (ends with .farcaster), a .bit domain, or a Next.ID address. We are leveraging Tableland's decentralized cloud database to store and manage our Person objects, associating individuals' wallet addresses with their facial hash! Our Studio team name is williamwang, and our dev address is 0x0E5d299236647563649526cfa25c39d6848101f5.
 
 **Development:** Using Foundry, we develop, test, and deploy the contracts to various EVM chains. 
 
 **Dispute Handling:** UMA is there for any potential face hash disputes.
 
 **Integration:** Thanks to discord.py, users enjoy a smooth journey on Discord, accessible via mobile, web, and desktop.
+
+
 
