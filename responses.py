@@ -8,6 +8,9 @@ import skimage
 import requests
 from PIL import Image
 import numpy as np
+from masknetwork import getETHAddressUsingMask
+
+from web3storage import uploadImageToIPFS
 
 step = 0
 name = "Name"
@@ -26,14 +29,18 @@ from dotenv import dotenv_values
 import os
 from twilio.rest import Client
 
+import w3storage
+
+w3 = w3storage.API(token="w3-api-token")
+
 
 config = dotenv_values(".env")  # Load .env file
 
 # Access the API keys
 openai_api_key = config["OPENAI_API_KEY"]
 discord_token = config["DISCORD_TOKEN"]
-account_sid = config['TWILIO_ACCOUNT_SID']
-auth_token = config['TWILIO_AUTH_TOKEN']
+account_sid = config["TWILIO_ACCOUNT_SID"]
+auth_token = config["TWILIO_AUTH_TOKEN"]
 client = Client(account_sid, auth_token)
 
 # Use the API keys in your code
@@ -44,8 +51,10 @@ hedera_to_encoding = {}
 
 flow_to_encoding = {}
 
-username_to_encoding = {
-    "Donald Trump": [
+wallet_to_phone = {"donaldtrump.eth": "4168807375", "barackobama.eth": "4168807375"}
+
+wallet_to_encoding = {
+    "donaldtrump.eth": [
         -0.14075439,
         0.11751342,
         0.00939059,
@@ -175,7 +184,7 @@ username_to_encoding = {
         0.01121672,
         0.04591377,
     ],
-    "Barack Obama": [
+    "barackobama.eth": [
         -0.0914344,
         0.13086095,
         0.01314385,
@@ -305,139 +314,138 @@ username_to_encoding = {
         0.0852315,
         0.00671965,
     ],
-   
 }
 
 william_encoding = [
-        -0.08489514,
-        0.16629207,
-        -0.00341852,
-        -0.0089607,
-        -0.07309289,
-        -0.0365204,
-        -0.07142913,
-        -0.09204409,
-        0.13079758,
-        -0.06249057,
-        0.18775795,
-        -0.07102738,
-        -0.24563771,
-        -0.12483668,
-        -0.07561519,
-        0.21899216,
-        -0.19840415,
-        -0.16191454,
-        -0.06565362,
-        0.01267712,
-        0.12735552,
-        0.0060061,
-        -0.03330318,
-        0.0601213,
-        -0.09948364,
-        -0.37896919,
-        -0.04892989,
-        -0.08004473,
-        0.0248933,
-        -0.04926632,
-        -0.06370206,
-        -0.02361014,
-        -0.20606354,
-        -0.07222925,
-        0.02395701,
-        0.05067029,
-        -0.0600784,
-        -0.03047261,
-        0.1981484,
-        0.0334802,
-        -0.25515872,
-        0.03835013,
-        0.05569423,
-        0.26776901,
-        0.21762674,
-        0.07363212,
-        0.04883651,
-        -0.15051921,
-        0.11447029,
-        -0.18776159,
-        0.03032518,
-        0.19864576,
-        0.0858774,
-        0.08481935,
-        0.00737492,
-        -0.13686721,
-        -0.01707979,
-        0.15946123,
-        -0.14788455,
-        0.03676679,
-        0.05411533,
-        -0.10939586,
-        -0.02040504,
-        -0.06258389,
-        0.28817016,
-        0.02403246,
-        -0.11974652,
-        -0.16277888,
-        0.17104167,
-        -0.15995584,
-        -0.08980826,
-        0.01079151,
-        -0.09745924,
-        -0.17857276,
-        -0.33928576,
-        0.04938306,
-        0.37440464,
-        0.09512523,
-        -0.197273,
-        0.11345024,
-        -0.04765933,
-        -0.02723197,
-        0.14252216,
-        0.1973733,
-        -0.00534958,
-        0.0197605,
-        -0.0809767,
-        -0.01989206,
-        0.24185868,
-        -0.08026418,
-        0.02053601,
-        0.22454603,
-        -0.01001545,
-        0.07074997,
-        0.02581748,
-        -0.02406856,
-        -0.10836311,
-        0.02895864,
-        -0.10457729,
-        -0.04334836,
-        0.04199492,
-        -0.02356306,
-        0.01468095,
-        0.09057769,
-        -0.11326458,
-        0.08015896,
-        0.01140614,
-        0.05092007,
-        0.02000132,
-        -0.01679315,
-        -0.09414355,
-        -0.1160293,
-        0.12748165,
-        -0.19033121,
-        0.27831239,
-        0.1562001,
-        0.06773084,
-        0.10076032,
-        0.16593421,
-        0.07828102,
-        0.02960114,
-        -0.01275891,
-        -0.21681403,
-        0.00667689,
-        0.14095992,
-        -0.04186418,
-        0.09741175,
-        -0.00806305,
-    ]
+    -0.08489514,
+    0.16629207,
+    -0.00341852,
+    -0.0089607,
+    -0.07309289,
+    -0.0365204,
+    -0.07142913,
+    -0.09204409,
+    0.13079758,
+    -0.06249057,
+    0.18775795,
+    -0.07102738,
+    -0.24563771,
+    -0.12483668,
+    -0.07561519,
+    0.21899216,
+    -0.19840415,
+    -0.16191454,
+    -0.06565362,
+    0.01267712,
+    0.12735552,
+    0.0060061,
+    -0.03330318,
+    0.0601213,
+    -0.09948364,
+    -0.37896919,
+    -0.04892989,
+    -0.08004473,
+    0.0248933,
+    -0.04926632,
+    -0.06370206,
+    -0.02361014,
+    -0.20606354,
+    -0.07222925,
+    0.02395701,
+    0.05067029,
+    -0.0600784,
+    -0.03047261,
+    0.1981484,
+    0.0334802,
+    -0.25515872,
+    0.03835013,
+    0.05569423,
+    0.26776901,
+    0.21762674,
+    0.07363212,
+    0.04883651,
+    -0.15051921,
+    0.11447029,
+    -0.18776159,
+    0.03032518,
+    0.19864576,
+    0.0858774,
+    0.08481935,
+    0.00737492,
+    -0.13686721,
+    -0.01707979,
+    0.15946123,
+    -0.14788455,
+    0.03676679,
+    0.05411533,
+    -0.10939586,
+    -0.02040504,
+    -0.06258389,
+    0.28817016,
+    0.02403246,
+    -0.11974652,
+    -0.16277888,
+    0.17104167,
+    -0.15995584,
+    -0.08980826,
+    0.01079151,
+    -0.09745924,
+    -0.17857276,
+    -0.33928576,
+    0.04938306,
+    0.37440464,
+    0.09512523,
+    -0.197273,
+    0.11345024,
+    -0.04765933,
+    -0.02723197,
+    0.14252216,
+    0.1973733,
+    -0.00534958,
+    0.0197605,
+    -0.0809767,
+    -0.01989206,
+    0.24185868,
+    -0.08026418,
+    0.02053601,
+    0.22454603,
+    -0.01001545,
+    0.07074997,
+    0.02581748,
+    -0.02406856,
+    -0.10836311,
+    0.02895864,
+    -0.10457729,
+    -0.04334836,
+    0.04199492,
+    -0.02356306,
+    0.01468095,
+    0.09057769,
+    -0.11326458,
+    0.08015896,
+    0.01140614,
+    0.05092007,
+    0.02000132,
+    -0.01679315,
+    -0.09414355,
+    -0.1160293,
+    0.12748165,
+    -0.19033121,
+    0.27831239,
+    0.1562001,
+    0.06773084,
+    0.10076032,
+    0.16593421,
+    0.07828102,
+    0.02960114,
+    -0.01275891,
+    -0.21681403,
+    0.00667689,
+    0.14095992,
+    -0.04186418,
+    0.09741175,
+    -0.00806305,
+]
 
 import openai
 
@@ -463,8 +471,7 @@ def generate_text(prompt):
     return generated_text
 
 
-
-welcome_message = """Hi - welcome to FaceConnect! How can I help?
+welcome_message = """Hi - welcome to FaceLink! How can I help?
         
 Type "Register" to get started!
 Type "Connect" to connect with anyone with an image of their face!
@@ -514,9 +521,9 @@ def get_response(message_string: str, message: any, is_private: any) -> str:
         registerFlow = True
         return """Let's get you registered! Please upload an image of yourself.
         
-If you wish, you can type your preferred phone number in the same message that you attach your image. 
+Please type your Ethereum wallet address in the same message.
 
-E.g. "4168807375" 
+E.g. "0x0E5d299236647563649526cfa25c39d6848101f5" or "williamw.eth"
 """
 
     if p_message == "hedera":
@@ -532,7 +539,9 @@ Please type your preferred Hedera address in the same message you attach your im
 """
     if p_message == "hedera transaction":
         hederaTransactionFlow = True
-        return f"Please upload an image of the person you want to send a transaction to!"
+        return (
+            f"Please upload an image of the person you want to send a transaction to!"
+        )
 
     if p_message == "flow":
         registerFlow = True
@@ -542,12 +551,23 @@ Please type your preferred Flow address in the same message you attach your imag
 
     if p_message == "flow transaction":
         flowTransactionFlow = True
-        return f"Please upload an image of the person you want to send a transaction to!"
-
+        return (
+            f"Please upload an image of the person you want to send a transaction to!"
+        )
 
     if registerFlow:
         print(message)
+        if message_string == "":
+            return "Sorry, I didn't get a wallet address, please try again!"
+        if not (
+            (message_string[:2] == "0x" and len(message_string) == 42)
+            or (message_string[-4:] == ".eth")
+        ):
+            # not valid address
+            return "Sorry, I didn't get a wallet address, please try again!"
         if message.attachments:
+            address = getETHAddressUsingMask(message_string)
+
             image_url = message.attachments[0].url
 
             img = get_image_from_url(image_url)
@@ -567,7 +587,7 @@ Please type your preferred Flow address in the same message you attach your imag
             print("User: ", discord_username)
             print("Encoding: ", face_encoding)
 
-            username_to_encoding[discord_username] = face_encoding
+            wallet_to_encoding[discord_username] = face_encoding
 
             # Assuming 'img' is a Discord.py image object
             face_locations = face_locations[0]
@@ -582,9 +602,9 @@ Please type your preferred Flow address in the same message you attach your imag
 
             return f"""Registration Successful!
 
-You have linked your face: {image_url} 
+You have linked your face: {uploadImageToIPFS(image_url)} (Stored on IPFS)
 
-To your specified alias: {discord_username} (Discord Username by default)
+To your wallet address: {discord_username}
 
 With the following encoding: {str(face_encoding)[:200]}... [2681 more characters]
 """
@@ -594,9 +614,8 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
 
     if p_message == "connect":
         connectFlow = True
-        print(username_to_encoding)
+        print(wallet_to_encoding)
         return f"Let's get you connected! Please upload an image of the person you want to contact. \n\n In the same message, please write the message you want to send to them!"
-
 
     if connectFlow or hederaFlow or hederaTransactionFlow or p_message == "":
         print(message)
@@ -610,8 +629,8 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
 
             image_array = np.array(img)
 
-            known_faces = list(username_to_encoding.values())
-            known_faces_names = list(username_to_encoding.keys())
+            known_faces = list(wallet_to_encoding.values())
+            known_faces_names = list(wallet_to_encoding.keys())
 
             print(known_faces)
 
@@ -629,46 +648,18 @@ With the following encoding: {str(face_encoding)[:200]}... [2681 more characters
                 print("Name: ", recipient)
                 print("The index of the first True element is:", index)
 
-                if (hederaFlow):
-                    hederaFlow = False
-                    return str(getHederaAccountInfo(recipient))[0:1000]
-                
-                if (hederaTransactionFlow):
-                    hederaTransactionFlow = False
-                    return f"""Face Recognition Successful! 
-
-Sending 1 HBAR To {recipient}
-                
-Image: {image_url} 
-
-Hedera Transaction Recipient: {recipient} (This can be hidden based on user privacy preferences)
-
-With the following encoding: {str(unknown_face_encoding)[:200]}... [2727 more characters]
-"""
-                if (flowTransactionFlow):
-                    flowTransactionFlow = False
-                    return f"""Face Recognition Successful! 
-
-Sending 1 FLOW To {recipient}
-                
-Image: {image_url} 
-
-FLOW Transaction Recipient: {recipient} (This can be hidden based on user privacy preferences)
-
-With the following encoding: {str(unknown_face_encoding)[:200]}... [2727 more characters]
-"""
-
                 discordAuthor = str(message.author)
 
-                if (recipient == "William Wang"):
-                    recipient = "4168807375"
-
-                if (recipient.isnumeric() and len(recipient) == 10):
-                    twiliomessage = client.messages \
-                    .create(
-                        body=f"Hi, FaceConnect here - {discordAuthor} wants to reach out to you! \n\n Their Discord username is {discordAuthor}. \n\n Their message for you is: {str(message_string)}",
-                        from_='+12295750071',
-                        to=f'+1{recipient}'
+                if (
+                    recipient in wallet_to_phone
+                    and message_string != ""
+                    and recipient.isnumeric()
+                    and len(recipient) == 10
+                ):
+                    twiliomessage = client.messages.create(
+                        body=f"Hi, FaceLink here - {discordAuthor} wants to reach out to you! \n\n Their Discord username is {discordAuthor}. \n\n Their message for you is: {str(message_string)}",
+                        from_="+12295750071",
+                        to=f"+1{wallet_to_phone[recipient]}",
                     )
 
                     print(twiliomessage.sid)

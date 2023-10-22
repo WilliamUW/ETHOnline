@@ -1,2 +1,7 @@
 .env
 __pycache__/
+xtmp-messaging/node_modules/
+xtmp-messaging/.cache/
+xtmp-messaging/.build/
+xtmp-messaging/.upm/
+xtmp-messaging/.config/
