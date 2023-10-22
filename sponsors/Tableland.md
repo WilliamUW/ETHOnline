@@ -18,7 +18,7 @@ We are leveraging Tableland's decentralized cloud database to store and manage o
 
 ### Link to the code where the tech is used.
 
-https://github.com/WilliamUW/ETHOnline/blob/11703a69dea4be5a1af4182c82f67cfd4bb8c59e/tablehand.ts#L240-L261
+https://github.com/WilliamUW/ETHOnline/blob/11703a69dea4be5a1af4182c82f67cfd4bb8c59e/tablehand.ts#L4-L261
 
 ### How easy is it to use the API / Protocol? (1 - very difficult, 10 - very easy)
 
