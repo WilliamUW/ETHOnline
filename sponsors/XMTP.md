@@ -8,7 +8,10 @@
 
 We use XMTP to allow our bot to message people's wallet addresses and help establish reach outs without exposing any personal identifying information!
 
-https://github.com/WilliamUW/ETHOnline/assets/25058545/43236d01-480c-400c-bf54-70861e0cdeff
+
+
+https://github.com/WilliamUW/ETHOnline/assets/25058545/11c18ad6-d31f-4389-8d95-f264671c5e8e
+
 
 ### Link to the code where the tech is used.
 
