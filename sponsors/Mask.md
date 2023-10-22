@@ -1,6 +1,6 @@
 # Sponsor Prize
 
-## [Sponsor Name]
+## Mask Network
 
 ### Prize Requirements
 
