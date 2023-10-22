@@ -17,19 +17,20 @@ contract FaceHasher {
     mapping(bytes32 => bytes32) public assertToFace;
 
     function addHash(bytes32 faceHash) public {
-        faceHahses[faceHash] = FaceHash(faceHash, bytes32(0), msg.sender);
+        faceHashes[faceHash] = FaceHash(faceHash, bytes32(0), msg.sender);
     }
 
     function removeHash(bytes32 faceHash) public {
-        delete faceHahses[faceHash];
+        delete faceHashes[faceHash];
     }
 
     function assertFaultyHash(bytes32 faceHash) public {
         require(address(_disputeOracle) != address(0));
-        require(faceHahses[faceHash].wallet != address(0));
+        require(faceHashes[faceHash].wallet != address(0));
+
         bytes memory claim = abi.encodePacked(
             "face hash",
-            AncillaryData.toUtf8Bytes32Bottom(faceHash),
+            abi.encodePacked(faceHash),
             "is incorrectly mapped to address"
         );
 
@@ -73,9 +74,9 @@ contract FaceHasher {
         bytes32 faceHash = assertToFace[assertionId];
 
         if (assertedTruthfully) {
-            delete faceHahses[faceHash];
+            delete faceHashes[faceHash];
         } else {
-            faceHashes[faceHahs].assertionId = bytes32(0);
+            faceHashes[faceHash].assertionId = bytes32(0);
         }
 
         assertToFace[assertionId] = bytes32(0);
