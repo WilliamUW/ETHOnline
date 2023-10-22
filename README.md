@@ -4,6 +4,7 @@
 With this project, users can send crypto 💸 and messages 💌 to anyone, as long as they have a photo 📸 of their face. By merging biometric data with AI, we create a unique hash for each face and connect that face to a wallet address. And the magic happens through a Discord bot – so you can send messages or crypto without needing the receiver's wallet address.
 
 ## How it's Made
+FaceLink is deployed and fully functional on Scroll and Polygon to act as an onchain mapping of biometric facial hash encoding to wallet addresses that be remapped as needed depending on if one's facial hash changes or one's wallet address changes.
 
 **Interface:** Our main interface is a Discord bot to handle registration, messaging, and sending crypto.
 
