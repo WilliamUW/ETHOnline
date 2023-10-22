@@ -1,6 +1,6 @@
 # Sponsor Prize
 
-## FileCoin & IFPS
+## FileCoin 
 
 ### Prize Requirements
 
@@ -16,7 +16,10 @@ We leveraged IPFS, specifically the Web3.Storage API to store the selfies that u
 
 
 
-https://github.com/WilliamUW/ETHOnline/assets/25058545/e5ebb26b-df25-458e-a5ca-a758ae39026e
+
+
+https://github.com/WilliamUW/ETHOnline/assets/25058545/396d1f2c-5ae0-47b6-92d8-87a54638f465
+
 
 
 
