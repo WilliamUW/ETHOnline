@@ -5,8 +5,8 @@ export interface Person {
   name: string;
   deleted: boolean;
   id: number;
-  walletAddress: string;
-  facialHash: string;
+  walletaddress: string;
+  facialhash: string;
 }
 
 export const state = function () {
